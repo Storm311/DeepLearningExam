@@ -10,7 +10,7 @@ class Config:
         self.SEED = 42
         self.DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
         self.NUM_WORKERS = 2
-        self.OUTPUT_DIR = "./outputs/UNet_Gaussian"
+        self.OUTPUT_DIR = "./outputs/UNet_speckle"
         
         # ---------------------------------------------------------------------
         # Data Configuration
@@ -24,7 +24,7 @@ class Config:
         # Noise Simulation Configuration
         # ---------------------------------------------------------------------
         # Type of noise to add: "gaussian", "salt_pepper", "poisson", "speckle"
-        self.NOISE_TYPE = "gaussian" 
+        self.NOISE_TYPE = "speckle" 
         
         # Parameters for Gaussian Noise
         self.NOISE_MEAN = 0.0
