@@ -10,7 +10,7 @@ class Config:
         self.SEED = 42
         self.DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
         self.NUM_WORKERS = 2
-        self.OUTPUT_DIR = "./outputs/UNet_speckle"
+        self.OUTPUT_DIR = "./outputs/Autoencoder_salt_pepper"
         
         # ---------------------------------------------------------------------
         # Data Configuration
@@ -24,7 +24,7 @@ class Config:
         # Noise Simulation Configuration
         # ---------------------------------------------------------------------
         # Type of noise to add: "gaussian", "salt_pepper", "poisson", "speckle"
-        self.NOISE_TYPE = "speckle" 
+        self.NOISE_TYPE = "salt_pepper" 
         
         # Parameters for Gaussian Noise
         self.NOISE_MEAN = 0.0
@@ -37,7 +37,7 @@ class Config:
         # Model Architecture (Denoising)
         # ---------------------------------------------------------------------
         # 'Autoencoder' or 'UNet' (simplified for 28x28)
-        self.MODEL_ARCH = "UNet"
+        self.MODEL_ARCH = "Autoencoder"
         self.INPUT_CHANNELS = 1
         self.HIDDEN_DIM = 64
         

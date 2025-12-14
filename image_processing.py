@@ -26,18 +26,25 @@ class ImageProcessor:
             noisy_img = img_np + noise
             
         elif self.config.NOISE_TYPE == "salt_pepper":
-            # Need to shift to [0,1] for skimage, then shift back if needed
-            # Or implement manually to avoid range issues
+            # Salt and pepper noise: randomly set pixels to min or max value
             noisy_img = img_np.copy()
-            # Salt
-            num_salt = np.ceil(self.config.SP_AMOUNT * img_np.size * 0.5)
-            coords = [np.random.randint(0, i - 1, int(num_salt)) for i in img_np.shape]
-            noisy_img[tuple(coords)] = 1.0 # Max value
             
-            # Pepper
-            num_pepper = np.ceil(self.config.SP_AMOUNT * img_np.size * 0.5)
-            coords = [np.random.randint(0, i - 1, int(num_pepper)) for i in img_np.shape]
-            noisy_img[tuple(coords)] = -1.0 if img_np.min() < 0 else 0.0 # Min value
+            # Calculate number of pixels to corrupt
+            num_salt = int(np.ceil(self.config.SP_AMOUNT * img_np.size * 0.5))
+            num_pepper = int(np.ceil(self.config.SP_AMOUNT * img_np.size * 0.5))
+            
+            # Generate random flat indices and convert to multi-dimensional coordinates
+            # This avoids issues with dimensions of size 1
+            if num_salt > 0:
+                flat_indices_salt = np.random.choice(img_np.size, size=num_salt, replace=False)
+                coords_salt = np.unravel_index(flat_indices_salt, img_np.shape)
+                noisy_img[coords_salt] = 1.0  # Max value (salt)
+            
+            if num_pepper > 0:
+                flat_indices_pepper = np.random.choice(img_np.size, size=num_pepper, replace=False)
+                coords_pepper = np.unravel_index(flat_indices_pepper, img_np.shape)
+                min_val = -1.0 if img_np.min() < 0 else 0.0
+                noisy_img[coords_pepper] = min_val  # Min value (pepper)
             
         elif self.config.NOISE_TYPE == "poisson":
             # Poisson depends on image intensity. 
