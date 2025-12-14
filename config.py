@@ -10,7 +10,7 @@ class Config:
         self.SEED = 42
         self.DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
         self.NUM_WORKERS = 2
-        self.OUTPUT_DIR = "./outputs/Autoencoder_salt_pepper"
+        self.OUTPUT_DIR = "./outputs/UNet_salt_pepper"
         
         # ---------------------------------------------------------------------
         # Data Configuration
@@ -37,7 +37,7 @@ class Config:
         # Model Architecture (Denoising)
         # ---------------------------------------------------------------------
         # 'Autoencoder' or 'UNet' (simplified for 28x28)
-        self.MODEL_ARCH = "Autoencoder"
+        self.MODEL_ARCH = "UNet"
         self.INPUT_CHANNELS = 1
         self.HIDDEN_DIM = 64
         
